@@ -1,8 +1,8 @@
 from typing import Dict, List, Tuple
-
+import sys
 
 def main():
-    K, x, A, B = get_input()
+    K, x, A, B = get_input_from_file(sys.argv[1])
     value, subseq = solve(K, x, A, B)
     print(value)
     print(subseq)
@@ -17,6 +17,17 @@ def get_input() -> Tuple[int, Dict[str, int], str, str]:
 
     A: str = input()
     B: str = input()
+    return K, x, A, B
+
+def get_input_from_file(file_path: str) -> Tuple[int, Dict[str, int], str, str]:
+    with open(file_path, "r") as f:
+        K = int(f.readline())
+        x = {}
+        for i in range(K):
+            input_str = f.readline().split()
+            x[input_str[0]] = int(input_str[1])
+        A = f.readline().strip()
+        B = f.readline().strip()
     return K, x, A, B
 
 
