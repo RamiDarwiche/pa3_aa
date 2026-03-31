@@ -1,22 +1,22 @@
-from typing import Dict, List, Tuple
+import typer
 import sys
-
-def main():
-    K, x, A, B = get_input_from_file(sys.argv[1])
-    value, subseq = solve(K, x, A, B)
-    print(value)
-    print(subseq)
-
+from typing import Dict, List, Tuple, Annotated
+from .example_generator import generate as generate_examples
 
 def get_input() -> Tuple[int, Dict[str, int], str, str]:
-    K: int = int(input())
-    x: Dict[str, int] = {}
-    for i in range(K):
-        input_str = input().split()
-        x[input_str[0]] = int(input_str[1])
+    try: 
+        K: int = int(input())
+        x: Dict[str, int] = {}
+        for i in range(K):
+            input_str = input().split()
+            x[input_str[0]] = int(input_str[1])
 
-    A: str = input()
-    B: str = input()
+        A: str = input()
+        B: str = input()
+    except Exception:
+        print("Error, expected the following input format:")
+        print("K\nx1 v1\nx2 v2\n...\nxK vK\nA\nB")
+        sys.exit(1)
     return K, x, A, B
 
 def get_input_from_file(file_path: str) -> Tuple[int, Dict[str, int], str, str]:
@@ -62,6 +62,35 @@ def solve(K: int, x: Dict[str, int], A: str, B: str) -> Tuple[int, str]:
     subseq = "".join(reversed(out))
     return dp[n][m], subseq
 
+"""
+
+CLI Interface functions
+
+"""
+
+app = typer.Typer()
+
+@app.command()
+def generate():
+    generate_examples()
+
+@app.command()
+def file(
+    file: Annotated[
+        str, typer.Argument(help="Path to input file")
+    ],
+):
+    K, x, A, B = get_input_from_file(file)
+    value, subseq = solve(K, x, A, B)
+    print(value)
+    print(subseq)
+
+@app.command("input")
+def _input():
+    K, x, A, B = get_input()
+    value, subseq = solve(K, x, A, B)
+    print(value)
+    print(subseq)
 
 if __name__ == "__main__":
-    main()
+    app()

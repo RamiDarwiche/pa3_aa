@@ -5,13 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pa3"
 version = "0.1.0"
-description = "Add your description here"
+description = "Code for Programming Assignment 3 of Algorithm Abstraction and Design, Spring 2026"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "typer>=0.21.1",
+]
 
 [project.scripts]
-pa3 = "src.main:main"
+pa3 = "src.main:app"
 
 [tool.setuptools.packages.find]
 where = ["."]
