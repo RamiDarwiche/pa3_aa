@@ -1,7 +1,7 @@
 import typer
 import sys
 from typing import Dict, List, Tuple, Annotated
-from .example_generator import generate as generate_examples
+from example_generator import generate as generate_examples
 
 def get_input() -> Tuple[int, Dict[str, int], str, str]:
     try: 
@@ -62,6 +62,9 @@ def solve(K: int, x: Dict[str, int], A: str, B: str) -> Tuple[int, str]:
     subseq = "".join(reversed(out))
     return dp[n][m], subseq
 
+
+
+
 """
 
 CLI Interface functions
@@ -94,3 +97,5 @@ def _input():
 
 if __name__ == "__main__":
     app()
+    
+
